@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import AutoSalaryCalculator from '../components/AutoSalaryCalculator';
-import CompanySearch from '../components/CompanySearch';
-import Footer from '../components/Footer';
-import Button from '../components/Button';
-import ResetButton from '../components/ResetButton';
-import PurpleButton from '../components/PurpleButton';
-import ZaubaButton from '../components/ZaubaButton';
+import AutoSalaryCalculator from './AutoSalaryCalculator';
+import CompanySearch from './CompanySearch';
+import Footer from './Footer';
+import Button from './Button';
+import ResetButton from './ResetButton';
+import PurpleButton from './PurpleButton';
+import ZaubaButton from './ZaubaButton';
 
-const Layout = () => {
+const Layout = ({ children }) => {
   const [copied, setCopied] = useState(false);
   const [loanId, setLoanId] = useState('');
   const [ids, setIds] = useState('');
@@ -92,14 +92,14 @@ const Layout = () => {
     if (selectedButtonIndex !== null) {
       const newButtons = customButtons.filter((_, index) => index !== selectedButtonIndex);
       setCustomButtons(newButtons);
-      setSelectedButtonIndex(null); // Clear the selection after deletion
+      setSelectedButtonIndex(null);
     }
   };
 
   return (
     <div className="min-h-screen dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex flex-col">
-      <div className="flex flex-row flex-grow">
-        <div className="w-1/4 p-4 dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] border-r">
+      <div className="flex flex-col lg:flex-row flex-grow">
+        <div className="w-full lg:w-1/4 p-4 dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] border-b lg:border-r lg:border-b-0">
           <div className="flex flex-col h-full">
             <div className="flex justify-around p-2 rounded-3xl bg-white/30 border-white/20 backdrop-blur-lg dark:bg-neutral-800/30 dark:border-neutral-600/30 mb-4">
               <ZaubaButton onClick={() => showTab('approved')}>Approved</ZaubaButton>
@@ -107,7 +107,8 @@ const Layout = () => {
               <ZaubaButton onClick={() => showTab('pending')}>Comments</ZaubaButton>
             </div>
 
-            <div id="approved" className="flex space-x-4">
+            <div id="approved" className="flex flex-wrap gap-2">
+              {/* Approved buttons */}
               <h5 className="font-bold">QID_109</h5>
               <CopyToClipboard text="salary_slip" onCopy={handleCopy}>
                 <Button>salary_slip</Button>
@@ -141,7 +142,8 @@ const Layout = () => {
               </CopyToClipboard>
             </div>
 
-            <div id="reject" className="flex space-x-4">
+            <div id="reject" className="flex flex-wrap gap-2">
+              {/* Reject buttons */}
               <h5 className="font-bold">QID_108</h5>
               <CopyToClipboard text="NOT APPROVED" onCopy={handleCopy}>
                 <Button>NOT APPROVED</Button>
@@ -189,6 +191,7 @@ const Layout = () => {
             </div>
 
             <div id="pending" className="flex flex-col space-y-4">
+              {/* Pending buttons and custom button management */}
               <h5 className="font-bold">Pending review</h5>
               <div>
                 <input
@@ -235,7 +238,7 @@ const Layout = () => {
           </div>
         </div>
 
-        <div className="w-3/4 p-4">
+        <div className="w-full lg:w-3/4 p-4">
           <div className="p-4 border rounded-3xl bg-white/30 border-white/20 backdrop-blur-lg dark:bg-neutral-800/30 dark:border-neutral-600/30 mb-4">
             <div className="mb-4">
               <input
@@ -266,11 +269,11 @@ const Layout = () => {
             </div>
           </div>
 
-          <div className="flex space-x-4">
-            <div className="w-1/2 rounded-3xl bg-white/30 border-white/20 backdrop-blur-lg dark:bg-neutral-800/30 dark:border-neutral-600/30 p-4 mb-4">
+          <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4">
+            <div className="w-full lg:w-1/2 rounded-3xl bg-white/30 border-white/20 backdrop-blur-lg dark:bg-neutral-800/30 dark:border-neutral-600/30 p-4 mb-4">
               <AutoSalaryCalculator />
             </div>
-            <div className="w-1/2 rounded-3xl bg-white/30 border-white/20 backdrop-blur-lg dark:bg-neutral-800/30 dark:border-neutral-600/30 p-4 mb-4">
+            <div className="w-full lg:w-1/2 rounded-3xl bg-white/30 border-white/20 backdrop-blur-lg dark:bg-neutral-800/30 dark:border-neutral-600/30 p-4 mb-4">
               <CompanySearch />
             </div>
           </div>
@@ -283,7 +286,9 @@ const Layout = () => {
         </div>
       )}
 
-      <Footer /> {/* Add Footer here */}
+      <Footer />
+      
+      {children}
     </div>
   );
 };
