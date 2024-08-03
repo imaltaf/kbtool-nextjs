@@ -5,7 +5,7 @@ import CompanySearch from './CompanySearch';
 import Footer from './Footer';
 import Button from './Button';
 import ResetButton from './ResetButton';
-import PurpleButton from './PurpleButton';
+import Card from './Card';
 import ZaubaButton from './ZaubaButton';
 
 const Layout = ({ children }) => {
@@ -14,20 +14,20 @@ const Layout = ({ children }) => {
   const [ids, setIds] = useState('');
   const [output, setOutput] = useState('Result will be displayed here');
   const [resetCounter, setResetCounter] = useState(0);
-  const [customButtons, setCustomButtons] = useState([]);
-  const [ButtonName, setButtonName] = useState('');
-  const [ButtonContent, setButtonContent] = useState('');
-  const [selectedButtonIndex, setSelectedButtonIndex] = useState(null);
+  const [customComments, setCustomComments] = useState([]);
+  const [newCommentTitle, setNewCommentTitle] = useState('');
+  const [newCommentContent, setNewCommentContent] = useState('');
+  const [selectedCommentIndex, setSelectedCommentIndex] = useState(null);
   const [activeTab, setActiveTab] = useState('approved');
 
   useEffect(() => {
-    const storedButtons = JSON.parse(localStorage.getItem('customButtons')) || [];
-    setCustomButtons(storedButtons);
+    const storedComments = JSON.parse(localStorage.getItem('customComments')) || [];
+    setCustomComments(storedComments);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('customButtons', JSON.stringify(customButtons));
-  }, [customButtons]);
+    localStorage.setItem('customComments', JSON.stringify(customComments));
+  }, [customComments]);
 
   const showTab = (tabId) => {
     setActiveTab(tabId);
@@ -40,8 +40,7 @@ const Layout = ({ children }) => {
     }, 2000);
   };
 
-
-  const copyResult = () => {
+   const copyResult = () => {
     const idsArray = ids.trim().split(" ");
     const idsCount = idsArray.length;
     const idsOutput = idsArray.join(",");
@@ -76,45 +75,88 @@ const Layout = ({ children }) => {
     setOutput('Result will be displayed here');
   };
 
-
-
   const checkEnter = (event) => {
     if (event.keyCode === 13) {
       copyResult();
     }
   };
 
-  const addCustomButton = () => {
-    if (ButtonName && ButtonContent) {
-      const newButtons = [...customButtons, { name: ButtonName, content: ButtonContent }];
-      setCustomButtons(newButtons);
-      setButtonName('');
-      setButtonContent('');
+  const addCustomComment = () => {
+    if (newCommentTitle && newCommentContent) {
+      const newComments = [...customComments, { title: newCommentTitle, content: newCommentContent }];
+      setCustomComments(newComments);
+      setNewCommentTitle('');
+      setNewCommentContent('');
     }
   };
 
-  const handleDeleteButton = () => {
-    if (selectedButtonIndex !== null) {
-      const newButtons = customButtons.filter((_, index) => index !== selectedButtonIndex);
-      setCustomButtons(newButtons);
-      setSelectedButtonIndex(null);
+  const handleDeleteComment = () => {
+    if (selectedCommentIndex !== null) {
+      const newComments = customComments.filter((_, index) => index !== selectedCommentIndex);
+      setCustomComments(newComments);
+      setSelectedCommentIndex(null);
     }
   };
+
+  const glassmorphismStyle = `
+  bg-gradient-to-br from-black/70 to-gray-900/70
+  backdrop-blur-3xl
+  border-4 border-gray-600/50
+  shadow-3xl
+  rounded-2xl
+`;
+
+
+  const inputStyle = `
+    bg-transparent
+    border border-white/20
+    text-white
+    placeholder-white/50
+    rounded-lg
+    p-2
+    w-full
+    focus:outline-none
+    focus:ring-2
+    focus:ring-purple-500
+    transition
+  `;
+
+  const inputStyle2 = `
+    bg-transparent
+    border border-white/20
+    text-white
+    placeholder-white/50
+    rounded-lg
+    p-2
+    w-40
+    focus:outline-none
+    focus:ring-2
+    focus:ring-purple-500
+    transition
+  `;
+
+
 
   return (
-    <div className="min-h-screen dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex flex-col">
-      <div className="flex flex-col lg:flex-row flex-grow">
-        <div className="w-full lg:w-1/4 p-2 sm:p-4 dark:bg-black bg-white dark:bg-dot-white/[0.2] bg-dot-black/[0.2] border-b lg:border-r lg:border-b-0">
-          <div className="flex flex-col h-full">
-            <div className="flex justify-around p-2 rounded-3xl bg-white/30 border-white/20 backdrop-blur-lg dark:bg-neutral-800/30 dark:border-neutral-600/30 mb-4">
-              <ZaubaButton onClick={() => showTab('approved')} className={`text-xs sm:text-sm ${activeTab === 'approved' ? 'active' : ''}`}>Approved</ZaubaButton>
-              <ZaubaButton onClick={() => showTab('reject')} className={`text-xs sm:text-sm ${activeTab === 'reject' ? 'active' : ''}`}>Reject</ZaubaButton>
-              <ZaubaButton onClick={() => showTab('comments')} className={`text-xs sm:text-sm ${activeTab === 'comments' ? 'active' : ''}`}>Comments</ZaubaButton>
-            </div>
+    
+    <div className="min-h-screen dark:bg-white bg-black dark:bg-dot-black/[0.2] bg-dot-white/[0.2]  relative flex flex-col">
+      
+      <div className="flex flex-col lg:flex-row flex-grow p-4 gap-4">
+        
+        <div className={`w-full lg:w-1/4 ${glassmorphismStyle} p-4`}>
+        <span className="absolute inset-0 rounded-lg bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(128,90,213,0.6)_0%,rgba(128,90,213,0)_75%)] opacity-50" />
+        
+          {/* Tabs and buttons */}
+          <div className="flex justify-around p-2 mb-4 bg-white/10 rounded-full">
+            <ZaubaButton onClick={() => showTab('approved')} className={`text-xs sm:text-sm ${activeTab === 'approved' ? 'bg-purple-500' : ''}`}>Approved</ZaubaButton>
+            <ZaubaButton onClick={() => showTab('reject')} className={`text-xs sm:text-sm ${activeTab === 'reject' ? 'bg-purple-500' : ''}`}>Reject</ZaubaButton>
+            <ZaubaButton onClick={() => showTab('comments')} className={`text-xs sm:text-sm ${activeTab === 'comments' ? 'bg-purple-500' : ''}`}>Comments</ZaubaButton>
+          </div>
 
-            <div className={`flex-wrap gap-1 sm:gap-2 ${activeTab === 'approved' ? 'flex' : 'hidden'}`}>
-              {/* Approved buttons */}
-              <h5 className="font-bold w-full">QID_109</h5>
+          {/* Content for each tab */}
+          <div className={`flex-wrap gap-2 ${activeTab === 'approved' ? 'flex' : 'hidden'}`}>
+            {/* Approved buttons (unchanged) */}
+            <h5 className="font-bold text-white w-full">QID_109</h5>
               <CopyToClipboard text="salary_slip" onCopy={handleCopy}>
                 <Button>salary_slip</Button>
               </CopyToClipboard>
@@ -146,9 +188,11 @@ const Layout = ({ children }) => {
                 <Button>aadhaar</Button>
               </CopyToClipboard>
               {/* Add more buttons as needed */}
-            </div>
 
-            <div className={`flex-wrap gap-1 sm:gap-2 ${activeTab === 'reject' ? 'flex' : 'hidden'}`}>
+          </div>
+          <span className="absolute bottom-0 left-4 h-px w-[calc(100%-2rem)] bg-gradient-to-r from-purple-400/0 via-purple-400/90 to-purple-400/0 transition-opacity duration-500" />
+          <div className={`flex-wrap gap-2 ${activeTab === 'reject' ? 'flex' : 'hidden'}`}>
+            {/* Reject buttons (unchanged) */}
             <h5 className="font-bold w-full">QID_108</h5>
               <CopyToClipboard text="NOT APPROVED" onCopy={handleCopy}>
                 <Button>NOT APPROVED</Button>
@@ -194,29 +238,30 @@ const Layout = ({ children }) => {
                 <Button>aadhaar</Button>
               </CopyToClipboard>
               {/* Add more buttons as needed */}
-            </div>
+            
+          </div>
 
-            <div className={`flex-wrap gap-1 sm:gap-2 ${activeTab === 'comments' ? 'flex' : 'hidden'}`}>
-              {/* Custom buttons */}
-              {customButtons.map((btn, index) => (
-                <CopyToClipboard key={index} text={btn.content} onCopy={handleCopy}>
-                  <Button className="text-xs sm:text-sm">{btn.name}</Button>
-                </CopyToClipboard>
-              ))}
-            </div>
+          <div className={`flex-wrap gap-2 ${activeTab === 'comments' ? 'flex' : 'hidden'}`}>
+            {customComments.map((comment, index) => (
+              <CopyToClipboard key={index} text={comment.content} onCopy={handleCopy}>
+                <Button className="text-xs sm:text-sm">{comment.title}</Button>
+              </CopyToClipboard>
+            ))}
           </div>
         </div>
 
-        <div className="w-full lg:w-3/4 p-2 sm:p-4">
-          <div className="p-2 sm:p-4 border rounded-3xl bg-white/30 border-white/20 backdrop-blur-lg dark:bg-neutral-800/30 dark:border-neutral-600/30 mb-4">
-            <div className="mb-4">
+        <div className="w-full lg:w-3/4">
+        
+          <div className={`${glassmorphismStyle} p-4 mb-4`}>
+            
+            <div className="mb-4 space-y-2">
               <input
                 type="text"
                 value={loanId}
                 onChange={(e) => setLoanId(e.target.value)}
                 placeholder="QID 106 and 117"
                 onKeyUp={checkEnter}
-                className="p-2 border rounded-lg bg-white/30 border-white/20 backdrop-blur-lg text-white placeholder-white/70 dark:bg-neutral-800/30 dark:border-neutral-600/30 dark:placeholder-neutral-400 w-full mb-2 text-sm sm:text-base"
+                className={inputStyle2}
               />
               <input
                 type="text"
@@ -224,8 +269,9 @@ const Layout = ({ children }) => {
                 onChange={(e) => setIds(e.target.value)}
                 placeholder="Enter transactions_id"
                 onKeyUp={checkEnter}
-                className="p-2 border rounded-lg bg-white/30 border-white/20 backdrop-blur-lg text-white placeholder-white/70 dark:bg-neutral-800/30 dark:border-neutral-600/30 dark:placeholder-neutral-400 w-full mb-2 text-sm sm:text-base"
+                className={inputStyle}
               />
+
               <div className="flex flex-wrap gap-2">
                 <Button onClick={copyResult} className="text-xs sm:text-sm">
                   <i className="fas fa-copy"></i> Copy
@@ -233,62 +279,67 @@ const Layout = ({ children }) => {
                 <ResetButton onClick={resetFields} className="text-xs sm:text-sm">
                   <i className="fas fa-redo"></i> Reset <span>{resetCounter}</span>
                 </ResetButton>
+                <span className="absolute bottom-0 left-4 h-px w-[calc(100%-2rem)] bg-gradient-to-r from-purple-400/0 via-purple-400/90 to-purple-400/0 transition-opacity duration-500" />
               </div>
             </div>
-            <div id="output" className="p-2 border rounded-lg bg-white/30 border-white/20 backdrop-blur-lg text-white placeholder-white/70 dark:bg-neutral-800/30 dark:border-neutral-600/30 dark:placeholder-neutral-400 w-full mb-4 text-sm sm:text-base">
+            <div id="output" className={`${inputStyle} min-h-[50px]`}>
               {output}
             </div>
+            
           </div>
+          
 
-          <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-4 mb-6">
-            <div className="w-full lg:w-1/2 rounded-3xl bg-white/30 border-white/20 backdrop-blur-lg dark:bg-neutral-800/30 dark:border-neutral-600/30 p-2 sm:p-4">
+          <div className="flex flex-col lg:flex-row gap-4 mb-6">
+            <div className={`w-full lg:w-1/2 ${glassmorphismStyle} p-4`}>
               <AutoSalaryCalculator />
             </div>
-            <div className="w-full lg:w-1/2 rounded-3xl bg-white/30 border-white/20 backdrop-blur-lg dark:bg-neutral-800/30 dark:border-neutral-600/30 p-2 sm:p-4">
+            <div className={`w-full lg:w-1/2 ${glassmorphismStyle} p-4`}>
               <CompanySearch />
             </div>
           </div>
 
-          <div className="w-full rounded-3xl dark:bg-neutral-800/30 p-2 sm:p-4 shadow-lg">
-            <h5 className="font-bold mb-2 text-gray-300 text-sm sm:text-base">Add/Delete Custom Comments</h5>
+          <div className={`w-full ${glassmorphismStyle} p-4`}>
+            <h5 className="font-bold mb-2 text-white text-sm sm:text-base">Add/Delete Custom Comments Button</h5>
             <div className="flex flex-col space-y-2">
               <input
                 type="text"
-                value={ButtonName}
-                onChange={(e) => setButtonName(e.target.value)}
-                placeholder="Button Name"
-                className="p-2 border rounded-lg bg-white/30 border-white/20 backdrop-blur-lg text-sm sm:text-base"
+                value={newCommentTitle}
+                onChange={(e) => setNewCommentTitle(e.target.value)}
+                placeholder="Comment Title"
+                className={inputStyle}
               />
-              <input
-                type="text"
-                value={ButtonContent}
-                onChange={(e) => setButtonContent(e.target.value)}
-                placeholder="Button Content"
-                className="p-2 border rounded-lg bg-white/30 border-white/20 backdrop-blur-lg text-sm sm:text-base"
+              <textarea
+                value={newCommentContent}
+                onChange={(e) => setNewCommentContent(e.target.value)}
+                placeholder="Comment Content"
+                className={`${inputStyle} min-h-[100px]`}
               />
-              <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
-                <PurpleButton onClick={addCustomButton} className="text-xs sm:text-sm">Add Button</PurpleButton>
+              <div className="flex flex-wrap gap-2">
+                <ZaubaButton onClick={addCustomComment}>Add Comment Button</ZaubaButton>
                 <select
-                  value={selectedButtonIndex ?? ''}
-                  onChange={(e) => setSelectedButtonIndex(Number(e.target.value))}
-                  className="p-2 border rounded-lg bg-white/30 border-white/20 backdrop-blur-lg flex-grow text-sm sm:text-base"
+                  value={selectedCommentIndex ?? ''}
+                  onChange={(e) => setSelectedCommentIndex(Number(e.target.value))}
+                  className={`${inputStyle} flex-grow `}
                 >
-                  <option value="">Select a button to delete</option>
-                  {customButtons.map((btn, index) => (
-                    <option key={index} value={index}>
-                      {btn.name}
+                  <option className=" bg-black" value="">Select a comment to delete</option>
+                  {customComments.map((comment, index) => (
+                    <option className=" bg-black" key={index} value={index}>
+                      {comment.title}
                     </option>
                   ))}
                 </select>
-                <PurpleButton onClick={handleDeleteButton} className="text-xs sm:text-sm">Delete button</PurpleButton>
+                <ZaubaButton onClick={handleDeleteComment} className="text-xs sm:text-sm">Delete Comment</ZaubaButton>
+                <span className="absolute bottom-0 left-4 h-px w-[calc(100%-2rem)] bg-gradient-to-r from-purple-400/0 via-purple-400/90 to-purple-400/0 transition-opacity duration-500" />
               </div>
             </div>
           </div>
+          
         </div>
+        
       </div>
 
       {copied && (
-        <div className="fixed bottom-24 left-4 via-purple-800 text-white py-2 px-4 rounded text-sm">
+        <div className="fixed bottom-24 left-4 bg-purple-600 text-white py-2 px-4 rounded text-sm">
           Copied to clipboard!
         </div>
       )}

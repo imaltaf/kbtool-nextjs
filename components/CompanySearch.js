@@ -19,13 +19,33 @@ const CompanySearch = () => {
     setCompanyName('');
   };
 
+  const inputStyle = `
+  bg-transparent
+  border border-purple-300/20
+  text-white
+  placeholder-purple-200/40
+  rounded-lg
+  px-4 py-3
+  w-full
+  focus:outline-none
+  focus:ring-2
+  focus:ring-purple-500/50
+  focus:border-transparent
+  transition-all duration-300 ease-in-out
+  backdrop-blur-sm
+  shadow-inner
+  text-sm
+  font-medium
+  hover:border-purple-400/30
+`;
   return (
-    <div className="p-6 bg-white/30 border-white/20 backdrop-blur-lg dark:bg-neutral-800/30 dark:border-neutral-600/30 flex flex-col items-center">
+    <div className="p-6 ">
+      
       <h1 className="text-gray-300 text-2xl font-bold mb-4">Company Search Engine</h1>
       <input
         type="text"
         id="companyName"
-        className="p-2 w-full mb-4 rounded bg-white/30 border-white/20 backdrop-blur-lg text-white placeholder-white/70 dark:bg-neutral-800/30 dark:border-neutral-600/30 dark:placeholder-neutral-400"
+        className="p-2 w-full mb-4 rounded bg-transparent w-full mb-2 text-sm sm:text-base split-border border border-white/20"
         placeholder="Enter Company Name"
         value={companyName}
         onChange={(e) => setCompanyName(e.target.value)}
@@ -37,6 +57,7 @@ const CompanySearch = () => {
         <ZaubaButton onClick={() => handleSearch('tofler')}>Tofler</ZaubaButton>
         <ZaubaButton onClick={() => handleSearch('site')}>WebSite</ZaubaButton>
       </div>
+      <span className="absolute bottom-0 left-4 h-px w-[calc(100%-2rem)] bg-gradient-to-r from-purple-400/0 via-purple-400/90 to-purple-400/0 transition-opacity duration-500" />
     </div>
   );
 };
