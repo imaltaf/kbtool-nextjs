@@ -247,6 +247,21 @@ const Layout = ({ children }) => {
                 <Button className="text-xs sm:text-sm">{comment.title}</Button>
               </CopyToClipboard>
             ))}
+            <CopyToClipboard text="QID75-Latest 3-months statement not available, Need Recent 3/6 Months Bank Acc statement Hence Given Preset" onCopy={handleCopy}>
+                <Button>QID-75</Button>
+              </CopyToClipboard>
+              <CopyToClipboard text="Need valid id card or pay slips to confirm salary" onCopy={handleCopy}>
+                <Button>id-payslip</Button>
+              </CopyToClipboard>
+              <CopyToClipboard text="Need till date bank statement -- Hence given p-reset" onCopy={handleCopy}>
+                <Button>p-reset</Button>
+              </CopyToClipboard>
+              <CopyToClipboard text="Need valid id card  to confirm salary" onCopy={handleCopy}>
+                <Button>ID</Button>
+              </CopyToClipboard>
+              <CopyToClipboard text="Need valid pay slips to confirm salary" onCopy={handleCopy}>
+                <Button>PaySlip</Button>
+              </CopyToClipboard>
           </div>
         </div>
 
@@ -305,7 +320,7 @@ const Layout = ({ children }) => {
                 type="text"
                 value={newCommentTitle}
                 onChange={(e) => setNewCommentTitle(e.target.value)}
-                placeholder="Comment Title"
+                placeholder="Button Title"
                 className={inputStyle}
               />
               <textarea
