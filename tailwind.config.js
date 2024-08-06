@@ -13,6 +13,20 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        moveBg: 'moveBg 5s ease infinite',
+      },
+      keyframes: {
+        moveBg: {
+          '0%': { 'background-position': '31% 0%' },
+          '50%': { 'background-position': '70% 100%' },
+          '100%': { 'background-position': '31% 0%' },
+        },
+      },
+      clipPath: {
+        button: 'polygon(0% 0.5em, 0.5em 0, 100% 0, 100% calc(100% - 0.5em), calc(100% - 0.5em) 100%, 0 100%)',
+        'button-hover': 'polygon(calc(100% - 0.125em) calc(100% - 0.625em), calc(100% - 0.125em) 0.125em, calc(100% - 0.125em) 0.125em, calc(100% - 0.125em) calc(100% - 0.625em), calc(100% - 0.625em) calc(0.125em), calc(100% - 0.625em) calc(0.125em))',
+      },
       colors: {
         'dark-bg': '#1a202c', // Custom dark background color
         'dark-grid': '#2d3748', // Custom dark grid color
@@ -20,8 +34,19 @@ module.exports = {
     },
   },
   plugins: [
+    require('@tailwindcss/forms'),
     addVariablesForColors,
-    function ({ matchUtilities, theme }) {
+    function ({ addUtilities, matchUtilities, theme }) {
+      const newUtilities = {
+        '.clip-path-button': {
+          clipPath: 'polygon(0% 0.5em, 0.5em 0, 100% 0, 100% calc(100% - 0.5em), calc(100% - 0.5em) 100%, 0 100%)',
+        },
+        '.clip-path-button-hover': {
+          clipPath: 'polygon(calc(100% - 0.125em) calc(100% - 0.625em), calc(100% - 0.125em) 0.125em, calc(100% - 0.125em) 0.125em, calc(100% - 0.125em) calc(100% - 0.625em), calc(100% - 0.625em) calc(0.125em), calc(100% - 0.625em) calc(0.125em))',
+        },
+      };
+      addUtilities(newUtilities, ['hover', 'focus']);
+
       matchUtilities(
         {
           "bg-grid": (value) => ({

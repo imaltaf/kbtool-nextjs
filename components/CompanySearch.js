@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ZaubaButton from './ZaubaButton';
 import ResetButton from './ResetButton';
 
+
 const CompanySearch = () => {
   const [companyName, setCompanyName] = useState('');
 
@@ -45,13 +46,13 @@ const CompanySearch = () => {
       <input
         type="text"
         id="companyName"
-        className="p-2 w-full mb-4 rounded bg-transparent w-full mb-2 text-sm sm:text-base split-border border border-white/20"
+        className="p-2 w-full mb-4 rounded bg-transparent text-white w-full mb-2 text-sm sm:text-base split-border border border border-white/20 placeholder-purple-200/40 focus:outline-none focus:ring-2 focus:ring-purple-500 "
         placeholder="Enter Company Name"
         value={companyName}
         onChange={(e) => setCompanyName(e.target.value)}
       />
       <div className="flex flex-wrap justify-center gap-2">
-        <ResetButton onClick={handleReset}>&#x2716;</ResetButton>
+        <ResetButton onClick={handleReset}>Reset </ResetButton>
         <ZaubaButton onClick={() => handleSearch('zauba')}>Zauba</ZaubaButton>
         <ZaubaButton onClick={() => handleSearch('companyCheck')}>Company Check</ZaubaButton>
         <ZaubaButton onClick={() => handleSearch('tofler')}>Tofler</ZaubaButton>

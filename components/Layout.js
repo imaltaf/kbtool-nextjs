@@ -7,6 +7,10 @@ import Button from './Button';
 import ResetButton from './ResetButton';
 import Card from './Card';
 import ZaubaButton from './ZaubaButton';
+import ButtonPro from './ButtonPro';
+import SocialMediaCard from '../components/SocialMediaCard';
+
+
 
 const Layout = ({ children }) => {
   const [copied, setCopied] = useState(false);
@@ -158,7 +162,7 @@ const Layout = ({ children }) => {
             {/* Approved buttons (unchanged) */}
             <h5 className="font-bold text-white w-full">QID_109</h5>
               <CopyToClipboard text="salary_slip" onCopy={handleCopy}>
-                <Button>salary_slip</Button>
+                <Button className="gap-2" >salary_slip</Button>
               </CopyToClipboard>
               <CopyToClipboard text="bank_narration" onCopy={handleCopy}>
                 <Button>bank_narration</Button>
@@ -247,7 +251,7 @@ const Layout = ({ children }) => {
                 <Button className="text-xs sm:text-sm">{comment.title}</Button>
               </CopyToClipboard>
             ))}
-            <CopyToClipboard text="QID75-Latest 3-months statement not available, Need Recent 3/6 Months Bank Acc statement Hence Given Preset" onCopy={handleCopy}>
+              <CopyToClipboard text="QID75-Latest 3-months statement not available, Need Recent 3/6 Months Bank Acc statement Hence Given Preset" onCopy={handleCopy}>
                 <Button>QID-75</Button>
               </CopyToClipboard>
               <CopyToClipboard text="Need valid id card or pay slips to confirm salary" onCopy={handleCopy}>
@@ -312,8 +316,8 @@ const Layout = ({ children }) => {
               <CompanySearch />
             </div>
           </div>
-
-          <div className={`w-full ${glassmorphismStyle} p-4`}>
+        <div className="flex flex-col lg:flex-row gap-4 mb-6">    
+          <div className={`w-full lg:w-1/2  ${glassmorphismStyle} p-4`}>
             <h5 className="font-bold mb-2 text-white text-sm sm:text-base">Add/Delete Custom Comments Button</h5>
             <div className="flex flex-col space-y-2">
               <input
@@ -347,11 +351,16 @@ const Layout = ({ children }) => {
                 <span className="absolute bottom-0 left-4 h-px w-[calc(100%-2rem)] bg-gradient-to-r from-purple-400/0 via-purple-400/90 to-purple-400/0 transition-opacity duration-500" />
               </div>
             </div>
+            
           </div>
-          
+          <div className={`w-full lg:w-1/2 ${glassmorphismStyle} p-4`}>
+              <SocialMediaCard />
+            </div>
+          </div>  
         </div>
         
       </div>
+      
 
       {copied && (
         <div className="fixed bottom-24 left-4 bg-purple-600 text-white py-2 px-4 rounded text-sm">
@@ -359,6 +368,7 @@ const Layout = ({ children }) => {
         </div>
       )}
 
+      
       <Footer />
       
       {children}

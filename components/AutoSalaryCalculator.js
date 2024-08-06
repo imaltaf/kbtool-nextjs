@@ -80,7 +80,7 @@ const AutoSalaryCalculator = () => {
         onPaste={handlePaste}
         className={inputStyle}
       />
-      <div id="auto-copied" className="text-green-500 mb-2">{autoCopied}</div>
+      <div id="auto-copied" className="text-purple-500 mb-2">{autoCopied}</div>
       <div id="result" className="text-lg font-bold">{averageResult}</div>
       <span className="absolute bottom-0 left-4 h-px w-[calc(100%-2rem)] bg-gradient-to-r from-purple-400/0 via-purple-400/90 to-purple-400/0 transition-opacity duration-500" />
     </div>
