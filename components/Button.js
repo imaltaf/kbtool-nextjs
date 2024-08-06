@@ -4,7 +4,7 @@ import React from 'react';
 const Button = ({ children, className, ...props }) => {
   return (
     <button
-      className={`bg-slate-800 no-underline group cursor-pointer relative shadow-2xl via-red-400/90 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block transform transition-transform duration-300 ease-in-out ${className} hover:bg-purple-700 hover:shadow-lg hover:scale-105`}
+      className={`bg-slate-800 no-underline group cursor-pointer relative shadow-2xl via-red-400/90 rounded-full p-px text-base font-semibold leading-6 text-white inline-block transform transition-transform duration-300 ease-in-out ${className} hover:bg-purple-700 hover:shadow-lg hover:scale-105`}
       {...props}
     >
       <span className="absolute inset-0 overflow-hidden rounded-lg">

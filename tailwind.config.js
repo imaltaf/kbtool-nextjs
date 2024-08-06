@@ -31,6 +31,9 @@ module.exports = {
         'dark-bg': '#1a202c', // Custom dark background color
         'dark-grid': '#2d3748', // Custom dark grid color
       },
+      fontSize: {
+        medium: '1rem', // Customize this value as needed
+      },
     },
   },
   plugins: [
